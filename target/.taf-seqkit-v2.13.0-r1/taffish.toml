@@ -1,0 +1,50 @@
+[package]
+name = "seqkit"
+kind = "tool"
+version = "2.13.0"
+release = 1
+license = "MIT"
+main = "src/main.taf"
+
+[meta]
+domain = "bio"
+categories = ["fasta", "fastq", "sequence-processing", "quality-control", "alignment-processing"]
+keywords = ["SeqKit", "FASTA", "FASTQ", "BAM", "gzip", "xz", "zstd", "bzip2", "lz4", "statistics", "subsequence", "sampling", "format-conversion"]
+description = "SeqKit ultrafast toolkit for FASTA/Q sequence manipulation and lightweight BAM monitoring."
+
+[repository]
+url = "https://github.com/taffish/seqkit"
+
+[command]
+name = "taf-seqkit"
+
+[runtime]
+pipe = true
+command_mode = true
+
+[container]
+image = "ghcr.io/taffish/seqkit:2.13.0-r1"
+dockerfile = "docker/Dockerfile"
+build_platforms = "linux/amd64,linux/arm64"
+
+[upstream]
+name = "SeqKit"
+type = "github"
+repo = "shenwei356/seqkit"
+homepage = "https://bioinf.shenwei.me/seqkit/"
+manual = "https://bioinf.shenwei.me/seqkit/usage/"
+release_url = "https://github.com/shenwei356/seqkit/releases/tag/v2.13.0"
+downloads = "https://github.com/shenwei356/seqkit/releases/download/v2.13.0/seqkit_linux_amd64.tar.gz; https://github.com/shenwei356/seqkit/releases/download/v2.13.0/seqkit_linux_arm64.tar.gz"
+version = "2.13.0"
+license = "MIT"
+citation = "Shen, Sipos and Zhao 2024; Shen et al. 2016"
+doi = "10.1002/imt2.191; 10.1371/journal.pone.0163962"
+pmid = "27706213"
+watch = "github-releases"
+strip_prefix = "v"
+
+[smoke]
+backend = "docker"
+timeout = 120
+exist = ["seqkit", "sh", "grep", "ldd"]
+test = ["seqkit version | grep -Fx 'seqkit v2.13.0' >/dev/null && seqkit --help 2>&1 | grep -F 'SeqKit -- a cross-platform and ultrafast toolkit' >/dev/null && seqkit sample2 --help 2>&1 | grep -F 'sample sequences' >/dev/null && seqkit bam --help 2>&1 | grep -F 'BAM' >/dev/null && { ldd $(command -v seqkit) 2>&1 || true; } | grep -E '(not a dynamic executable|statically linked)' >/dev/null", "mkdir -p /tmp/taf-seqkit-basic && cd /tmp/taf-seqkit-basic && printf '>chr1\\nACGTACGTNNNNACGT\\n>chr2\\nTTAGGGTTAGGGCCCTAA\\n' > ref.fa && printf '@r1\\nACGTNN\\n+\\nFFFFFF\\n@r2\\nTTAGGGTTAGGG\\n+\\nFFFFFFFFFFFF\\n' > reads.fq && seqkit stats -T ref.fa reads.fq > stats.tsv && grep -F 'ref.fa' stats.tsv >/dev/null && grep -F 'reads.fq' stats.tsv >/dev/null && seqkit fq2fa reads.fq > reads.fa && grep -F '>r1' reads.fa >/dev/null && seqkit seq -m 12 ref.fa > filtered.fa && grep -F '>chr2' filtered.fa >/dev/null", "mkdir -p /tmp/taf-seqkit-search && cd /tmp/taf-seqkit-search && printf '>chr1\\nACGTACGTNNNNACGT\\n>chr2\\nTTAGGGTTAGGGCCCTAA\\n' > ref.fa && printf 'chr2\\n' > ids.txt && seqkit grep -f ids.txt ref.fa > chr2.fa && grep -F '>chr2' chr2.fa >/dev/null && seqkit locate -p ACGT ref.fa > locate.tsv && grep -F 'chr1' locate.tsv >/dev/null && seqkit faidx ref.fa chr1:2-5 > slice.fa && grep -F 'CGTA' slice.fa >/dev/null", "mkdir -p /tmp/taf-seqkit-convert && cd /tmp/taf-seqkit-convert && printf '>seq1\\nATGAAATAG\\n>seq2\\nACGTTT\\n' > seqs.fa && seqkit translate -w 0 seqs.fa > prot.fa && grep -F 'MK*' prot.fa >/dev/null && seqkit seq -r -p seqs.fa > rc.fa && grep -F 'AAACGT' rc.fa >/dev/null && seqkit fx2tab seqs.fa > seqs.tsv && seqkit tab2fx seqs.tsv > round.fa && grep -F '>seq1' round.fa >/dev/null", "mkdir -p /tmp/taf-seqkit-compress && cd /tmp/taf-seqkit-compress && printf '>seq1\\nACGTACGT\\n>seq2\\nTTAGGGTTAGGG\\n>seq3\\nCCCCAAAAGGGG\\n' > seqs.fa && seqkit sample2 -n 2 -s 7 seqs.fa > sample.fa && grep -F '>seq' sample.fa >/dev/null && seqkit seq -o seqs.fa.lz4 seqs.fa && test -s seqs.fa.lz4 && seqkit stats seqs.fa.lz4 > lz4.stats && grep -F 'seqs.fa.lz4' lz4.stats >/dev/null && seqkit sum seqs.fa > sum.txt && grep -F 'seqkit.v0.1_DLS_k0_' sum.txt >/dev/null"]
