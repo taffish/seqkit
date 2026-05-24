@@ -1,4 +1,4 @@
-taf-seqkit 2.13.0-r1
+taf-seqkit 2.13.0-r2
 
 SeqKit v2.13.0 for ultrafast FASTA/Q sequence manipulation and
 lightweight BAM monitoring. The default command is the upstream seqkit CLI.
@@ -73,6 +73,12 @@ Packaged commands:
 
 Platform:
   Uses official upstream static Linux binaries for linux/amd64 and linux/arm64.
+
+License:
+  TAFFISH app packaging: Apache-2.0.
+  Upstream software: MIT.
+  Bundled components, data, models, and external resources keep their
+  own license terms.
 
 Boundaries:
   This app packages SeqKit itself. It does not bundle Samtools, aligners,

@@ -1,14 +1,14 @@
 # taf-seqkit
 
-`taf-seqkit` packages SeqKit `2.13.0-r1`, an ultrafast toolkit for FASTA/Q sequence manipulation and lightweight BAM monitoring.
+`taf-seqkit` packages SeqKit `2.13.0-r2`, an ultrafast toolkit for FASTA/Q sequence manipulation and lightweight BAM monitoring.
 
 Package identity:
 
 - name: `seqkit`
 - command: `taf-seqkit`
 - kind: `tool`
-- TAFFISH version: `2.13.0-r1`
-- container image: `ghcr.io/taffish/seqkit:2.13.0-r1`
+- TAFFISH version: `2.13.0-r2`
+- container image: `ghcr.io/taffish/seqkit:2.13.0-r2`
 - upstream release: `v2.13.0`
 - runtime version string: `seqkit v2.13.0`
 - upstream license: MIT
@@ -110,12 +110,16 @@ The smoke tests verify representative FASTA, FASTQ, subcommand, LZ4 compression,
 
 The image uses official upstream static Linux binaries and is intended for native `linux/amd64` and `linux/arm64` container platforms.
 
+## License Boundary
+
+The TAFFISH app packaging files are licensed under Apache-2.0. The packaged upstream SeqKit software is covered by: MIT. Bundled third-party components, datasets, models, and external resources keep their own license terms.
+
 ## Upstream
 
 - Upstream repository: <https://github.com/shenwei356/seqkit>
 - Upstream documentation: <https://bioinf.shenwei.me/seqkit/>
 - Upstream release: <https://github.com/shenwei356/seqkit/releases/tag/v2.13.0>
-- License: MIT
+- Upstream license: MIT
 
 Primary citation:
 

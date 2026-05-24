@@ -2,8 +2,8 @@
 name = "seqkit"
 kind = "tool"
 version = "2.13.0"
-release = 1
-license = "MIT"
+release = 2
+license = "Apache-2.0"
 main = "src/main.taf"
 
 [meta]
@@ -23,7 +23,7 @@ pipe = true
 command_mode = true
 
 [container]
-image = "ghcr.io/taffish/seqkit:2.13.0-r1"
+image = "ghcr.io/taffish/seqkit:2.13.0-r2"
 dockerfile = "docker/Dockerfile"
 build_platforms = "linux/amd64,linux/arm64"
 
@@ -40,7 +40,7 @@ license = "MIT"
 citation = "Shen, Sipos and Zhao 2024; Shen et al. 2016"
 doi = "10.1002/imt2.191; 10.1371/journal.pone.0163962"
 pmid = "27706213"
-watch = "github-releases"
+watch = "tags"
 strip_prefix = "v"
 
 [smoke]
