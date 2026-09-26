@@ -1,0 +1,6 @@
+{
+  "artifact": "taf-seqkit-v2.14.0-r1",
+  "schema": "taffish.build/v1",
+  "source_sha256": "c7eee75b4a0a38d239c9d23fed102209dd8d2a061c8335b7f5305664ff2d7a4c",
+  "wrapper_sha256": "3db74429d863ced87793d6c8f1e3383e88d8e875fa83132ff6974201b8a602ae"
+}
